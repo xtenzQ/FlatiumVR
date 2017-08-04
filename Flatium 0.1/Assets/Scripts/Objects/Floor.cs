@@ -15,9 +15,6 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider), typeof(MeshFilter))]
 public class Floor : FlatiumObject {
 
-	//TODO default material. WARN if all projects will be pre-created - so there will be no need in default material, right?
-    public static Material DEFAULT_FLOOR_MATERIAL;
-
 	// array of some furniture (as bookshelfs or sofa or chair with table)
 	// TODO mb should use ArrayList
     private Furniture[] objects;
@@ -36,7 +33,14 @@ public class Floor : FlatiumObject {
         gameObject.tag = "Floor";
         gameObject.layer = LayerMask.NameToLayer("Floor");
 
-        //gameObject.GetComponent<Renderer>().material = Floor.DEFAULT_FLOOR_MATERIAL;
+		Transform floor = GetComponent<Transform> ();
+		objects = new Furniture[floor.childCount];
+		for (int i = 0; i < floor.childCount; i++) {
+			objects[i] = floor.GetChild (i).gameObject.AddComponent<Furniture> ();
+		}
+
+		// HACK remove when wireframe drawing shader will be ready
+		material = gameObject.GetComponent<Renderer>().material;
     }
 
     void Update () {
@@ -45,6 +49,9 @@ public class Floor : FlatiumObject {
 
     public override void onfocus () {
 		// TODO wireframe draw focus
+
+		// HACK remove when wireframe drawing shader will be ready
+		gameObject.GetComponent<Renderer>().material = (_focused) ? Flatium.FOCUSED_MATERIAL : material;
     }
 
     public override void onselect () {
@@ -60,8 +67,8 @@ public class Floor : FlatiumObject {
 		onclick ();
 
 		// WARN remove on release
-		if (Flatium.sight.stare) {
-			Flatium.player.transform.position = Flatium.sight_focus.point + new Vector3 (0, 3, 0);
+		if (Sight.stare) {
+			Flatium.player.transform.position = Sight.focus.point + new Vector3 (0, 1.5f, 0);
 		}
 	}
 }

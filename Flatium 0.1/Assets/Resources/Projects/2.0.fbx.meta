@@ -1,0 +1,227 @@
+fileFormatVersion: 2
+guid: 203a36bcb5b3bb54393275006d11a63b
+timeCreated: 1501766770
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Ceiling
+    100004: Ceiling_2
+    100006: Ceiling_3
+    100008: chair
+    100010: chair_MeshPart0
+    100012: chair_MeshPart1
+    100014: Floor
+    100016: Floor_2
+    100018: Floor_3
+    100020: Furniture
+    100022: Hall
+    100024: Kitchen
+    100026: Plinth
+    100028: Small_Room
+    100030: w1
+    100032: w1_2
+    100034: w1_3
+    100036: w2
+    100038: w2_2
+    100040: w2_3
+    100042: w3
+    100044: w3_2
+    100046: w3_3
+    100048: w4
+    100050: w4_2
+    100052: Walls
+    100054: Walls_2
+    100056: Walls_3
+    100058: Rooms
+    100060: Sweep
+    100062: "\u0421\u0432\u0435\u0442"
+    100064: Ambient1
+    100066: Ambient2
+    100068: Fill
+    100070: Key
+    100072: Lights
+    100074: Plinth_2
+    100076: Plinth_3
+    400000: //RootNode
+    400002: Ceiling
+    400004: Ceiling_2
+    400006: Ceiling_3
+    400008: chair
+    400010: chair_MeshPart0
+    400012: chair_MeshPart1
+    400014: Floor
+    400016: Floor_2
+    400018: Floor_3
+    400020: Furniture
+    400022: Hall
+    400024: Kitchen
+    400026: Plinth
+    400028: Small_Room
+    400030: w1
+    400032: w1_2
+    400034: w1_3
+    400036: w2
+    400038: w2_2
+    400040: w2_3
+    400042: w3
+    400044: w3_2
+    400046: w3_3
+    400048: w4
+    400050: w4_2
+    400052: Walls
+    400054: Walls_2
+    400056: Walls_3
+    400058: Rooms
+    400060: Sweep
+    400062: "\u0421\u0432\u0435\u0442"
+    400064: Ambient1
+    400066: Ambient2
+    400068: Fill
+    400070: Key
+    400072: Lights
+    400074: Plinth_2
+    400076: Plinth_3
+    2300000: Ceiling
+    2300002: Ceiling_2
+    2300004: Ceiling_3
+    2300006: chair_MeshPart0
+    2300008: chair_MeshPart1
+    2300010: Floor
+    2300012: Floor_2
+    2300014: Floor_3
+    2300016: Plinth
+    2300018: w1
+    2300020: w1_2
+    2300022: w1_3
+    2300024: w2
+    2300026: w2_2
+    2300028: w2_3
+    2300030: w3
+    2300032: w3_2
+    2300034: w3_3
+    2300036: w4
+    2300038: w4_2
+    2300040: Sweep
+    2300042: Plinth_2
+    2300044: Plinth_3
+    2300046: chair
+    3300000: Ceiling
+    3300002: Ceiling_2
+    3300004: Ceiling_3
+    3300006: chair_MeshPart0
+    3300008: chair_MeshPart1
+    3300010: Floor
+    3300012: Floor_2
+    3300014: Floor_3
+    3300016: Plinth
+    3300018: w1
+    3300020: w1_2
+    3300022: w1_3
+    3300024: w2
+    3300026: w2_2
+    3300028: w2_3
+    3300030: w3
+    3300032: w3_2
+    3300034: w3_3
+    3300036: w4
+    3300038: w4_2
+    3300040: Sweep
+    3300042: Plinth_2
+    3300044: Plinth_3
+    3300046: chair
+    4300000: Plinth
+    4300002: chair_MeshPart0
+    4300004: chair_MeshPart1
+    4300006: w4
+    4300008: w3
+    4300010: w2
+    4300012: w1
+    4300014: Ceiling
+    4300016: Floor
+    4300018: w3_2
+    4300020: w2_2
+    4300022: w1_2
+    4300024: Ceiling_2
+    4300026: Floor_2
+    4300028: w4_2
+    4300030: w3_3
+    4300032: w2_3
+    4300034: w1_3
+    4300036: Floor_3
+    4300038: Ceiling_3
+    4300040: Sweep
+    4300042: Plinth_2
+    4300044: Plinth_3
+    4300046: chair
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

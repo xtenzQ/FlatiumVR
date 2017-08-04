@@ -7,79 +7,95 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /**
- * this class represent Flatium content. Ideally, instances of this classes must be contained in some DB
- * TODO I don't realy sure that Project must extend MonoBehaviour
+ * This class stores all objects in the room
+ * That makes easy select all objects in the room
+ */
+public class Room {
+
+	public Room (Transform root) {
+		// great... So, when I export project with cinema all objects with same name
+		// like "Wall" replaced by "Wall_1", "Wall_2" and e.t.c.
+		// so, this fucking HACK is temporary solution. Use not a .Find(name), but getChild(i)
+		// and then check it's name... agrh, TODO should think about export structure
+		for (int i = 0; i < root.childCount; i++) {
+			Transform roomObject = root.GetChild (i);
+			if (roomObject.name.Contains("Walls")) {
+				walls = new Wall[roomObject.childCount];
+				for (int j = 0; j < roomObject.childCount; j++) {
+					walls [j] = roomObject.GetChild (j).gameObject.AddComponent<Wall> ();
+				}
+			}
+			if (roomObject.name.Contains("Floor")) {
+				floor = roomObject.gameObject.AddComponent<Floor>();
+			}
+			if (roomObject.name.Contains("Plinth")) {
+				plinth = roomObject;
+			}
+		}
+		// TODO use when export structure will be fixed!
+		/*
+			// TODO improve this... "error catch system"...
+		Transform root = roomRoot.Find ("Walls");
+		if (root != null) {
+			rooms[i].walls = new Wall[root.childCount];
+			for (int j = 0; j < root.childCount; j++) {
+				rooms [i].walls [j] = root.GetChild (j).gameObject.AddComponent<Wall> ();
+			}
+		}
+		*/
+	}
+
+	public Wall[] walls; // all walls of the room
+	public Floor floor; // floor of the room
+	//public Ceiling ceilings; //TODO Ceiling class
+	public Transform plinth; // think about it
+
+}
+
+/**
+ * this static class represent Flatium content. Ideally, instances of this classes must be contained in some DB
  * TODO DB
  */
-public class Project : MonoBehaviour {
+public class Project {
 
-    public Wall[] walls;            // All walls in the scene
-    public Floor[] floors;          // All floors... where? Oh, in the scene of cource
-    public Furniture[] furniture;   // All... I don't know... maybe furniture in the scene?
+	public static GameObject instance; // project root in hierarchy
 
-	//TODO adequate clearing... I think it's not
-	public void clear () {
-        walls = new Wall[0];
-        floors = new Floor[0];
-        furniture = new Furniture[0];
+	public static Room[] rooms;	// All rooms in current project
+
+	private Project () {} // It's a static class
+
+	public static void reset () {
+		GameObject.Destroy (instance);
+		if ((instance = GameObject.FindGameObjectWithTag("Project")) == null) { 
+			instance = new GameObject ("Project");
+			instance.tag = "Project";
+		}
+
+		rooms = null;
     }
 
-    public void save(string url) {
+	public static void save(string url) {
         //TODO project saving into... somewhere. Is this function even required?
     }
 
-	// TODO I tried to connect this with constructor but failed. In spirit of "Project p = new Project("MyResource/MyProject");". Connect with "Start"?
-	// TODO this method require further developing
-	// TODO every project must have "walls_root" and "floors_root" (used right now), or maybe just use checking for null?
-	// TODO there can be no furniture in the room (used right now), or maybe every project must have "furniture_root" even empty...
-	public void open(string url) {		
-        clear();
-        
-		// getting the root of the project
-		Transform project = (Resources.Load(url) as GameObject).GetComponent<Transform>();
+	public static void open(string url) {
+		reset (); // reset previous project
 
-		// geting "walls_root" and "floors_root" and others and checking for their existence
-        Transform wallParent = project.Find("Walls");
+		// put project into world
+		instance = UnityEngine.Object.Instantiate(Resources.Load (url) as GameObject);
 
-		// TODO improve this... "error catch system"...
-        if (wallParent == null) {
-            Debug.LogError("Project has no Walls hierarchy object!");
-            return;
-        }
-        Transform floorParent = project.Find("Floors");
-        if (floorParent == null)
-        {
-            Debug.LogError("Project has no Floors hierarchy object!");
-            return;
-        }
-        // hate duplication - I'we already get love with JS
+		// get "Rooms" root
+		Transform roomsRoot = instance.GetComponent<Transform> ().Find ("Rooms");
+		// set "rooms" array length as in "Room" root
+		rooms = new Room[roomsRoot.childCount];
+		for (int i = 0; i < roomsRoot.childCount; i++) {
+			// creating rooms
+			rooms [i] = new Room (roomsRoot.GetChild (i));
+		}
 
-		// TODO is there some way to add objects to the world (to the hierarchy) without copying (Instantiate method) ?!... (!!!)
-		// 		seriously, why I should copy this fucking data? This is insane!
-        wallParent = UnityEngine.Object.Instantiate(wallParent);
-        for (int i = 0; i < wallParent.childCount; i++) {
-            wallParent.GetChild(i).gameObject.AddComponent<Wall>();
-        }
-        floorParent = UnityEngine.Object.Instantiate(floorParent);
-        for (int i = 0; i < floorParent.childCount; i++) {
-            floorParent.GetChild(i).gameObject.AddComponent<Floor>();
-        }
-        walls = wallParent.GetComponentsInChildren<Wall>();
-        floors = floorParent.GetComponentsInChildren<Floor>();
-        // agrh... fucking duplicate
-
-        Transform furnitureParent = project.Find("Furniture");
-        if (furnitureParent != null) {
-			// TODO this looks badly... back to the question about Instantiate excluding
-            furnitureParent = UnityEngine.Object.Instantiate(furnitureParent);
-            for (int i = 0; i < furnitureParent.childCount; i++) {
-                furnitureParent.GetChild(i).gameObject.AddComponent<Furniture>();
-            }
-            furniture = furnitureParent.GetComponentsInChildren<Furniture>();
-        }
-
+		// WARN remove on release
 		Debug.Log ("Project loaded: " + url);
-    }
-
+	}			
 }
+
 

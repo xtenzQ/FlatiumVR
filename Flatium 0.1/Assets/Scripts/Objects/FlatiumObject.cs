@@ -15,9 +15,12 @@ using UnityEngine;
  */
 public abstract class FlatiumObject : MonoBehaviour {
 
+	// HACK remove when wireframe drawing shader will be ready
+	protected Material material;
+
 	// just bool vars that shows object _focus/_selected state
-    private bool _selected = false;
-    private bool _focused = false;
+	protected bool _selected = false;
+    protected bool _focused = false;
 
     // get-set for _focus/_selected vars
     public bool selected {

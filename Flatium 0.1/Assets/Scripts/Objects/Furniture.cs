@@ -13,14 +13,12 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider), typeof(MeshFilter))]
 public class Furniture : FlatiumObject {
 
-	//TODO default material. WARN if all projects will be pre-created - so there will be no need in default material, right?
-	public static Material DEFAULT_FURNITURE_MATERIAL; 
-
     void Start () {
         gameObject.tag = "Furniture";
         gameObject.layer = LayerMask.NameToLayer("Walls and Furniture");
 
-        //gameObject.GetComponent<Renderer>().material = Furniture.DEFAULT_FURNITURE_MATERIAL;
+		// HACK remove when wireframe drawing shader will be ready
+		material = gameObject.GetComponent<Renderer>().material;
     }
 
     void Update () {
@@ -29,6 +27,9 @@ public class Furniture : FlatiumObject {
 		
 	public override void onfocus () {
 		// TODO wireframe draw focus
+
+		// HACK remove when wireframe drawing shader will be ready
+		gameObject.GetComponent<Renderer>().material = (_focused) ? Flatium.FOCUSED_MATERIAL : material;
 	}
 
 	public override void onselect () {

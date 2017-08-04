@@ -15,35 +15,8 @@ using UnityEngine;
  * TODO think about wall side edges, maybe they should use default concree material, use some mix
  *      of fmaterial and smaterial, or maybe they must be editable
  */
-[RequireComponent(typeof(BoxCollider), typeof(MeshFilter))]
+[RequireComponent(typeof(MeshCollider), typeof(MeshFilter))]
 public class Wall : FlatiumObject {
-
-	// first and second material
-    private Material _fm;
-    private Material _sm;
-
-	// get-set for _fm and _sm
-    public Material fmaterial {
-        get {
-            return _fm;
-        }
-
-        set {
-			_fm = value;
-            //TODO set on the first face
-        }
-    }
-
-    public Material smaterial {
-        get {
-            return _sm;
-        }
-
-        set {
-			_sm = value;
-            //TODO set on the second face
-        }
-    }
 
 	// array of some furniture (as picture or mirrow) or internal objects (as door and windows)
 	// TODO mb should use ArrayList
@@ -63,6 +36,15 @@ public class Wall : FlatiumObject {
     void Start () {
         gameObject.tag = "Wall";
         gameObject.layer = LayerMask.NameToLayer("Walls and Furniture");
+
+		Transform wall = GetComponent<Transform> ();
+		objects = new Furniture[wall.childCount];
+		for (int i = 0; i < wall.childCount; i++) {
+			objects[i] = wall.GetChild (i).gameObject.AddComponent<Furniture> ();
+		}
+
+		// HACK remove when wireframe drawing shader will be ready
+		material = gameObject.GetComponent<Renderer>().material;
 	}
 	
 	void Update () {
@@ -71,6 +53,9 @@ public class Wall : FlatiumObject {
 
     public override void onfocus () {
 		// TODO wireframe draw focus
+
+		// HACK remove when wireframe drawing shader will be ready
+		gameObject.GetComponent<Renderer>().material = (_focused) ? Flatium.FOCUSED_MATERIAL : material;
     }
 
     public override void onselect () {

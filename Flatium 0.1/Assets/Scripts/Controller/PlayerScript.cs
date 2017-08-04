@@ -10,7 +10,9 @@ public class PlayerScript : MonoBehaviour {
 
     public static GameObject instance;
 
-    private float speed = 10.0f;
+	private float height = 1.5f;
+    private float speed = 3.0f;
+	private float rotation_sensety = 5.0f;
 
 	void Awake () {
 		instance = gameObject; // some kind of singleton?	
@@ -40,8 +42,7 @@ public class PlayerScript : MonoBehaviour {
 
 	private void updateRotation () {		
 		if (Input.GetMouseButton(0)) {
-			
-			this.transform.eulerAngles += new Vector3(Input.GetAxis("Mouse Y"), -Input.GetAxis("Mouse X"), 0) * 3;
+			this.transform.eulerAngles += new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * rotation_sensety;
 		}
 	}
 

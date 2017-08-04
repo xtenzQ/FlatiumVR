@@ -9,8 +9,7 @@ using UnityEngine;
 
 /**
  *  Flatium contain main logic of program
- *  TODO WTF, this is singleton or static class? (!)
- *  TODO Sight class // in progress Ivan
+ *  TODO WTF, this is singleton or static class? (!) working on it IVAN
  */
 public class Flatium : MonoBehaviour {
 
@@ -23,6 +22,10 @@ public class Flatium : MonoBehaviour {
 	// such var used in singleton patterns... think about it
     public static Flatium instance;
 
+	// Find solution!
+	// Using of C# event system
+	// Flatium will be publisher and objects subscribers
+	// working on it IVAN
 	//===========================================EVENTS===========================================//
 	// TODO it's first time when I use delegates. Delegate principle are cleare, but the system I made looks like a piece of shit..
 	// delegate
@@ -42,8 +45,8 @@ public class Flatium : MonoBehaviour {
 
 	private static void defaultOnStareCallback () {
 		// this function allow VR use "click"
-		if (Flatium.focus) {
-			Flatium.focus.onclick ();
+		if (Sight.focusObject) {
+			Sight.focusObject.onclick ();
 		}
 
 		// WARN remove it on release
@@ -88,36 +91,8 @@ public class Flatium : MonoBehaviour {
 	// this var represent current project. Contain all FlatiumObjects, and you can get them through this refrence
     public static Project project;
 
-	// this var represent sight functionality. It's some kind of mouse
-	public static Sight sight;
-	public static RaycastHit sight_focus; // TODO remove to Sight // TODO rename to "focus"
-
 	// this var is a reference to player
 	public static GameObject player;
-
-	// this var contain Object, that lies under the mouse (usualy it's underlined in some way)
-	private static FlatiumObject _focus; // TODO remove to Sight? // TODO rename to "focusObject"
-	// get-set for _focus
-	public static FlatiumObject focus { // maybe I'm too much abuse "get-set" functionality?
-		set {
-			if(Flatium._focus != null) {
-				Flatium._focus.focused = false;
-
-				//WARN delete on release, or when wireframe selection will be ready
-				Flatium._focus.gameObject.GetComponent<Renderer>().material = STANDARD_MATERIAL; 
-			}
-			Flatium._focus = value;
-			if (Flatium._focus != null) {
-				Flatium._focus.focused = true;
-
-				//WARN delete on release, or when wireframe selection will be ready
-				Flatium._focus.gameObject.GetComponent<Renderer>().material = SELECTED_MATERIAL;
-			}
-		}
-		get {
-			return Flatium._focus;
-		}
-	}
 
 	// this var contain all selected objects
     public static ArrayList sellected;
@@ -127,6 +102,8 @@ public class Flatium : MonoBehaviour {
     }
 
     void Start () {
+		string DEFAULT_PROJECT_URL = "Projects/2.0";
+
         // WARN remove on release, just debug variables
         STANDARD_MATERIAL = Resources.Load("Materials/Standard") as Material;
         SELECTED_MATERIAL = Resources.Load("Materials/Selected") as Material;
@@ -138,54 +115,16 @@ public class Flatium : MonoBehaviour {
 
 		// TODO open the project menu (preferably)
 		// open default project
-		// some kind of "new Project()"... this looks wierd... why I don't use "new Project()"... because gladiolus
-		Flatium.project = Flatium.instance.gameObject.AddComponent<Project>();
-        Flatium.project.open("1.0");
+		Project.open (DEFAULT_PROJECT_URL);
 
-		Flatium.sight = Flatium.instance.gameObject.AddComponent<Sight>();
-
-		setDefaultCallback ();
+		setDefaultCallback (); // TODO remove it later
 
 		Debug.Log ("Initialization over");
     }
 
 	void Update () {
-        updateMouse();
+		Sight.updateSight ();
+		Sight.updateFocus ();
     }
 
-	// TODO remove to Sight?
-    void updateMouse () { 
-		// TODO WARN such structure required order Sight.Update() -> Flatium.Update()
-		// 		removing to Sight will solve this problem
-		//		but... how in Unity determine the order of Updates?
-		if (sight.moved) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-			// TODO maybe shuold create some variable like TYPE or ID, or use built-in vars loke TAG... or something else
-			// 		should raycast be separate for walls and floors? Is this faster way? At least this thing determine what exactly was collided Wall or Floor
-			Physics.Raycast(ray, out sight_focus, Mathf.Infinity, LayerMask.GetMask("Walls and Furniture"));
-			if (sight_focus.collider != null) {
-				// walls and furniture proccesing
-
-				// TODO potential error place. Why? I get FlatiumObject component... I'm shoked just because it's work and I have a big doubts about it
-                // 		imagine if there was two FlatiumObject binded to gameObject. Test it later
-				FlatiumObject fo = sight_focus.collider.gameObject.GetComponent<FlatiumObject>();
-
-				Flatium.focus = fo;
-
-            } else {
-				Physics.Raycast(ray, out sight_focus, Mathf.Infinity, LayerMask.GetMask("Floor"));
-				if (sight_focus.collider != null) {
-					// floors proccesing
-					FlatiumObject fo = sight_focus.collider.gameObject.GetComponent<FlatiumObject>();
-
-					Flatium.focus = fo;
-
-
-				} else {
-					Flatium.focus = null;
-				}
-            }            
-        }
-    }
 }
