@@ -10,7 +10,7 @@ public class PlayerScript : MonoBehaviour {
 
     public static GameObject instance;
 
-	private float height = 1.5f;
+	public static Vector3 height = new Vector3(0, 1.5f, 0);
     private float speed = 3.0f;
 	private float rotation_sensety = 5.0f;
 

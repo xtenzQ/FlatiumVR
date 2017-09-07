@@ -50,7 +50,7 @@ public class Flatium : MonoBehaviour {
 		}
 
 		// WARN remove it on release
-		Debug.Log("What are you staring?");
+		//Debug.Log("What are you staring?");
 	}		
 
 	private static void defaultOnMoveCallback () {
@@ -69,7 +69,7 @@ public class Flatium : MonoBehaviour {
 		// apply or denay and e.t.c.
 
 		// WARN remove it on release
-		Debug.Log("Click");
+		//Debug.Log("Click");
 	}
 
 	public static void setDefaultCallback () {
