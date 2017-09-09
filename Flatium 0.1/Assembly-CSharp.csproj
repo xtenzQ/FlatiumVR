@@ -171,6 +171,8 @@
      <Compile Include="Assets\Scripts\Controller\Sight.cs" />
      <Compile Include="Assets\Scripts\Core\Flatium.cs" />
      <Compile Include="Assets\Scripts\Core\Project.cs" />
+     <Compile Include="Assets\Scripts\GUI\EditorMenu.cs" />
+     <Compile Include="Assets\Scripts\GUI\ListComponent.cs" />
      <Compile Include="Assets\Scripts\Objects\FlatiumObject.cs" />
      <Compile Include="Assets\Scripts\Objects\Floor.cs" />
      <Compile Include="Assets\Scripts\Objects\Furniture.cs" />
