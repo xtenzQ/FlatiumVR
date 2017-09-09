@@ -105,4 +105,10 @@ public class Sight {
 		}
 	}
 
+    public static void resetSight()
+    {
+        stare = false;
+        stareTime = Time.time;
+    }
+
 }
