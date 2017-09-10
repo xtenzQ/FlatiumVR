@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.1.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -197,11 +199,13 @@
     <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrMathHelpers.cs" />
     <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrUIHelpers.cs" />
     <Compile Include="Assets\GoogleVR\Scripts\Video\GvrVideoPlayerTexture.cs" />
-    <Compile Include="Assets\Scripts\Controller\PlayerScript.cs" />
+    <Compile Include="Assets\Scripts\Controller\Player.cs" />
     <Compile Include="Assets\Scripts\Controller\Sight.cs" />
     <Compile Include="Assets\Scripts\Core\Flatium.cs" />
     <Compile Include="Assets\Scripts\Core\Project.cs" />
+    <Compile Include="Assets\Scripts\GUI\EditorMenu.cs" />
     <Compile Include="Assets\Scripts\GUI\FloorMenu.cs" />
+    <Compile Include="Assets\Scripts\GUI\ListComponent.cs" />
     <Compile Include="Assets\Scripts\Objects\FlatiumObject.cs" />
     <Compile Include="Assets\Scripts\Objects\Floor.cs" />
     <Compile Include="Assets\Scripts\Objects\Furniture.cs" />

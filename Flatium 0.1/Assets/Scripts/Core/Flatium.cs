@@ -110,7 +110,7 @@ public class Flatium : MonoBehaviour {
         FOCUSED_MATERIAL = Resources.Load("Materials/Focused") as Material;
 
 		// TODO and if the player won't be created for this time, huh!?
-		// 		mb create access to player only throught PlayerScript.instance?
+		// 		mb create access to player only throught Player.instance?
 		player = GameObject.FindGameObjectWithTag ("Player");
 
 		// TODO open the project menu (preferably)

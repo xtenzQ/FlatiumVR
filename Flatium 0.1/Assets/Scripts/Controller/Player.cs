@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour {
+public class Player : MonoBehaviour {
 
     public static GameObject instance;
 
@@ -42,7 +42,23 @@ public class PlayerScript : MonoBehaviour {
 
 	private void updateRotation () {		
 		if (Input.GetMouseButton(0)) {
-			this.transform.eulerAngles += new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * rotation_sensety;
+		    Vector3 mouseMovement = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * rotation_sensety + this.transform.eulerAngles;
+            // Говнокод! Исправить!
+            if (mouseMovement.x > 180)
+		    {
+		        if (mouseMovement.x < 270)
+		        {
+		            mouseMovement.x = 270;
+		        }
+		    }
+		    else
+		    {
+		        if (mouseMovement.x > 90)
+		        {
+		            mouseMovement.x = 90;
+		        }
+		    }
+		    this.transform.eulerAngles = mouseMovement;
 		}
 	}
 
