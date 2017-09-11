@@ -1,0 +1,244 @@
+fileFormatVersion: 2
+guid: 9b622d3e54fa3fa4e9251c3e08faca55
+timeCreated: 1505143031
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: base_pie_monitor
+    100002: cd1
+    100004: cd2
+    100006: cd3
+    100008: Cylinder001
+    100010: Cylinder002
+    100012: Cylinder003
+    100014: Cylinder004
+    100016: Cylinder005
+    100018: Cylinder006
+    100020: Cylinder007
+    100022: Cylinder008
+    100024: Cylinder009
+    100026: Loft001
+    100028: mesa
+    100030: //RootNode
+    100032: pantalla
+    100034: pie_monitor
+    100036: pomo1
+    100038: pomo2
+    100040: pomo3
+    100042: pomo4
+    100044: soporte_pantalla
+    100046: Sphere002
+    100048: Sphere003
+    100050: Sphere004
+    100052: Sphere005
+    100054: Sphere006
+    100056: Sphere007
+    100058: Sphere008
+    100060: Sphere009
+    100062: Sphere011
+    100064: vaso
+    400000: base_pie_monitor
+    400002: cd1
+    400004: cd2
+    400006: cd3
+    400008: Cylinder001
+    400010: Cylinder002
+    400012: Cylinder003
+    400014: Cylinder004
+    400016: Cylinder005
+    400018: Cylinder006
+    400020: Cylinder007
+    400022: Cylinder008
+    400024: Cylinder009
+    400026: Loft001
+    400028: mesa
+    400030: //RootNode
+    400032: pantalla
+    400034: pie_monitor
+    400036: pomo1
+    400038: pomo2
+    400040: pomo3
+    400042: pomo4
+    400044: soporte_pantalla
+    400046: Sphere002
+    400048: Sphere003
+    400050: Sphere004
+    400052: Sphere005
+    400054: Sphere006
+    400056: Sphere007
+    400058: Sphere008
+    400060: Sphere009
+    400062: Sphere011
+    400064: vaso
+    2300000: base_pie_monitor
+    2300002: cd1
+    2300004: cd2
+    2300006: cd3
+    2300008: Cylinder001
+    2300010: Cylinder002
+    2300012: Cylinder003
+    2300014: Cylinder004
+    2300016: Cylinder005
+    2300018: Cylinder006
+    2300020: Cylinder007
+    2300022: Cylinder008
+    2300024: Cylinder009
+    2300026: Loft001
+    2300028: mesa
+    2300030: pantalla
+    2300032: pie_monitor
+    2300034: pomo1
+    2300036: pomo2
+    2300038: pomo3
+    2300040: pomo4
+    2300042: soporte_pantalla
+    2300044: Sphere002
+    2300046: Sphere003
+    2300048: Sphere004
+    2300050: Sphere005
+    2300052: Sphere006
+    2300054: Sphere007
+    2300056: Sphere008
+    2300058: Sphere009
+    2300060: Sphere011
+    2300062: vaso
+    3300000: base_pie_monitor
+    3300002: cd1
+    3300004: cd2
+    3300006: cd3
+    3300008: Cylinder001
+    3300010: Cylinder002
+    3300012: Cylinder003
+    3300014: Cylinder004
+    3300016: Cylinder005
+    3300018: Cylinder006
+    3300020: Cylinder007
+    3300022: Cylinder008
+    3300024: Cylinder009
+    3300026: Loft001
+    3300028: mesa
+    3300030: pantalla
+    3300032: pie_monitor
+    3300034: pomo1
+    3300036: pomo2
+    3300038: pomo3
+    3300040: pomo4
+    3300042: soporte_pantalla
+    3300044: Sphere002
+    3300046: Sphere003
+    3300048: Sphere004
+    3300050: Sphere005
+    3300052: Sphere006
+    3300054: Sphere007
+    3300056: Sphere008
+    3300058: Sphere009
+    3300060: Sphere011
+    3300062: vaso
+    4300000: base_pie_monitor
+    4300002: cd1
+    4300004: cd2
+    4300006: cd3
+    4300008: Cylinder001
+    4300010: Cylinder002
+    4300012: Cylinder003
+    4300014: Cylinder004
+    4300016: Cylinder005
+    4300018: Cylinder006
+    4300020: Cylinder007
+    4300022: Cylinder008
+    4300024: Cylinder009
+    4300026: Loft001
+    4300028: mesa
+    4300030: pantalla
+    4300032: pie_monitor
+    4300034: pomo1
+    4300036: pomo2
+    4300038: pomo3
+    4300040: pomo4
+    4300042: soporte_pantalla
+    4300044: Sphere002
+    4300046: Sphere003
+    4300048: Sphere004
+    4300050: Sphere005
+    4300052: Sphere006
+    4300054: Sphere007
+    4300056: Sphere008
+    4300058: Sphere009
+    4300060: Sphere011
+    4300062: vaso
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

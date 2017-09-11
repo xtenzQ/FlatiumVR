@@ -10,7 +10,7 @@ public class FloorMenu : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-		
+		syncWithPlayer ();
 	}
 	
 	// Update is called once per frame

@@ -34,20 +34,23 @@ public class ListComponent : MonoBehaviour {
 	public void setFocus(bool focus) {
 		if (!selected) {
 			imageComponent.color = (focus) ? FOCUS_COLOR : DEFAULT_COLOR;
-		}
-		EditorMenu.setSelectedObject ((focus) ? this : ListComponent.selectedComponent);
+
+			EditorMenu.instance.setSelectedObject ((focus) ? this : ListComponent.selectedComponent);
+		}			
 	}		
 
 	public void selectComponent () {
-		if (ListComponent.selectedComponent) {
-			ListComponent.selectedComponent.imageComponent.color = DEFAULT_COLOR;
-			ListComponent.selectedComponent.selected = false;
-		}
-		ListComponent.selectedComponent = this;
-		selected = true;
-		imageComponent.color = SELECT_COLOR;
+		if (!selected) {
+			if (ListComponent.selectedComponent) {
+				ListComponent.selectedComponent.imageComponent.color = DEFAULT_COLOR;
+				ListComponent.selectedComponent.selected = false;
+			}
+			ListComponent.selectedComponent = this;
+			selected = true;
+			imageComponent.color = SELECT_COLOR;
 
-		EditorMenu.setSelectedObject (this);
+			EditorMenu.instance.setSelectedObject (this);	
+		}
 	}
 
 }

@@ -5,25 +5,45 @@ using UnityEngine.UI;
 
 public class EditorMenu : MonoBehaviour {
 
-	private static GameObject SelectedObject = null;
-	private static Vector3 SELECTED_OBJECT_POSITION = new Vector3 (-20.0f, -11.0f, 0.0f);
+	public static EditorMenu instance;
 
 	public float rotationSpeed = 0.5f;
+	public GameObject RTTObjectRoot;
 
-	public ScrollRect sr;
-
-	public static void setSelectedObject (ListComponent c) {
-		if (!c) return;
-		GameObject go = Resources.Load (c.url) as GameObject;
-		if (go != null) {
-			EditorMenu.SelectedObject = UnityEngine.Object.Instantiate(go);
-			EditorMenu.SelectedObject.transform.position = SELECTED_OBJECT_POSITION;	
+	public void setSelectedObject (ListComponent componentFromList) {
+		if (RTTObjectRoot != null) {
+			GameObject go;
+			// Удаление старого RTT объекта
+			if (RTTObjectRoot.transform.childCount > 0) {
+				go = RTTObjectRoot.transform.GetChild (0).gameObject;
+				RTTObjectRoot.transform.DetachChildren ();
+				GameObject.Destroy(go);
+				// Странно, но на прямую без DetachChildren не работает. Что поделать, пусть будет так
+			}
+			// Добавление нового RTT объекта
+			if (componentFromList != null) {
+				go = Resources.Load ("Models/" + componentFromList.url) as GameObject;
+				if (go) {
+					GameObject cgo = UnityEngine.Object.Instantiate (go);
+					cgo.name = "RTTObject";
+					cgo.transform.SetParent (RTTObjectRoot.transform, false);
+					cgo.layer = RTTObjectRoot.layer;
+					// Если объект один, то одной смены layer достаточно. Но сейчас модели состоят из большого числа деталей,
+					// для каждой из которых устанавливается layer. В идеале нужно сделать рекурсивно, но это ведь дебаго-код. 
+					// REMOVE ON RELEASE
+					for (int i = 0; i < cgo.transform.childCount; i++) {
+						cgo.transform.GetChild (i).gameObject.layer = RTTObjectRoot.layer;
+					}
+				}				
+			}
 		}
-	}		
+	}
+
+	void Start () {
+		EditorMenu.instance = this;
+	}
 	
-	void Update () {		
-		if (EditorMenu.SelectedObject != null) {
-			EditorMenu.SelectedObject.transform.rotation *= Quaternion.AngleAxis(rotationSpeed, new Vector3(0.0f, 1.0f, 0.0f));
-		}
+	void Update () {
+		RTTObjectRoot.transform.rotation *= Quaternion.AngleAxis(rotationSpeed, new Vector3(0.0f, 1.0f, 0.0f));
 	}
 }

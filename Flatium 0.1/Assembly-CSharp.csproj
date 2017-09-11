@@ -167,7 +167,7 @@
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrMathHelpers.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrUIHelpers.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Video\GvrVideoPlayerTexture.cs" />
-     <Compile Include="Assets\Scripts\Controller\PlayerScript.cs" />
+     <Compile Include="Assets\Scripts\Controller\Player.cs" />
      <Compile Include="Assets\Scripts\Controller\Sight.cs" />
      <Compile Include="Assets\Scripts\Core\Flatium.cs" />
      <Compile Include="Assets\Scripts\Core\Project.cs" />
