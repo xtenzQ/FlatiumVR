@@ -2,14 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FloorMenu : MonoBehaviour
 {
+
+	public static FloorMenu instance;
+
     // Флажок для режима передвижения
     private bool movementMode;
 
 	// Use this for initialization
 	void Start () {
+		instance = this;
 		syncWithPlayer ();
 	}
 	
@@ -21,10 +26,10 @@ public class FloorMenu : MonoBehaviour
         if (movementMode)
 	    {
             //Debug.Log(Sight.focusObject.tag);
-	        if (Sight.stare && Sight.focusObject.tag == "Floor")
+			if (Sight.instance.stare && Sight.instance.focusObject.tag == "Floor")
 	        {
 	            movementMode = false;
-	            Player.instance.transform.position = Sight.focus.point + Player.height;
+				Player.instance.transform.position = Sight.instance.focus.point + Player.height;
 	            syncWithPlayer();
             }
 	    }

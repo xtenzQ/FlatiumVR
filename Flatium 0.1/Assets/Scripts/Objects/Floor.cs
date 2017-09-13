@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /**
  * Floorthis class of floor... surprise
@@ -67,8 +68,8 @@ public class Floor : FlatiumObject {
 		onclick ();
 
 		// WARN remove on release
-		if (Sight.stare) {
-			Flatium.player.transform.position = Sight.focus.point + new Vector3 (0, 1.5f, 0);
+		if (Sight.instance.stare) {
+			Flatium.player.transform.position = Sight.instance.focus.point + new Vector3 (0, 1.5f, 0);
 		}
 	}
 }

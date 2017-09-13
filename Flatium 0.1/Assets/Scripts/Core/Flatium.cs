@@ -45,8 +45,8 @@ public class Flatium : MonoBehaviour {
 
 	private static void defaultOnStareCallback () {
 		// this function allow VR use "click"
-		if (Sight.focusObject) {
-			Sight.focusObject.onclick ();
+		if (Sight.instance.focusObject) {
+			Sight.instance.focusObject.onclick ();
 		}
 
 		// WARN remove it on release
@@ -123,8 +123,7 @@ public class Flatium : MonoBehaviour {
     }
 
 	void Update () {
-		Sight.updateSight ();
-		Sight.updateFocus ();
+		
     }
 
 }

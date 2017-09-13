@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class EditorMenu : MonoBehaviour {
 
+	// Канва, затемняющая фон при вызове меню
+	public Image fadeScreen;
+	// Цвет максимального затемнения
+	private Color FADE_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+
 	public static EditorMenu instance;
 
 	public float rotationSpeed = 0.5f;

@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /**
  * FlatiumObject - base abstract class for all objects in Flatium. All object can be selected and 
@@ -13,7 +14,10 @@ using UnityEngine;
  *      ContainerObject and put it like a fild (preferable), or create abstract ContainerObject that will 
  *      inherit FlatiumObject and will be expanded with them? // in progres Ivan
  */
+[RequireComponent(typeof(EventTrigger))]
 public abstract class FlatiumObject : MonoBehaviour {
+
+	protected EventTrigger trigger;
 
 	// HACK remove when wireframe drawing shader will be ready
 	protected Material material;
@@ -42,6 +46,20 @@ public abstract class FlatiumObject : MonoBehaviour {
             onfocus();
         }
     }
+
+	void Awake () {
+		trigger = gameObject.GetComponent<EventTrigger> ();
+
+		EventTrigger.Entry entry = new EventTrigger.Entry ();
+		entry.eventID = EventTriggerType.PointerDown;
+		entry.callback.AddListener ((data) => Yeaaaa());
+
+		trigger.triggers.Add (entry);
+	}
+
+	public void Yeaaaa () {
+		Debug.Log ("Triggggeeeeer!");
+	}
 
 	// simple event system
     public abstract void onselect();
