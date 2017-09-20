@@ -48,28 +48,19 @@ public class Floor : FlatiumObject {
 		
 	}
 
-    public override void onfocus () {
+	public override void OnPointerEnter (PointerEventData eventData) {
+		focused = true;
 		// TODO wireframe draw focus
 
 		// HACK remove when wireframe drawing shader will be ready
-		gameObject.GetComponent<Renderer>().material = (_focused) ? Flatium.FOCUSED_MATERIAL : material;
+		gameObject.GetComponent<Renderer>().material = Flatium.FOCUSED_MATERIAL;
     }
 
-    public override void onselect () {
-		// TODO wireframe draw select
-    }
+	public override void OnPointerExit (PointerEventData eventData) {
+		focused = false;
+		// TODO wireframe draw focus
 
-	public override void onclick () {
-		// TODO maybe move person to click position, or call material GUI, or place here Furniture	
-		Flatium.onclick(this);
-	}
-
-	public void OnMouseDown () {
-		onclick ();
-
-		// WARN remove on release
-		if (Sight.instance.stare) {
-			Flatium.player.transform.position = Sight.instance.focus.point + new Vector3 (0, 1.5f, 0);
-		}
+		// HACK remove when wireframe drawing shader will be ready
+		gameObject.GetComponent<Renderer>().material = material;
 	}
 }

@@ -21,18 +21,7 @@ public class FloorMenu : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        // Осторожно, говнокод!
-        // TODO: создать делегаты
-        if (movementMode)
-	    {
-            //Debug.Log(Sight.focusObject.tag);
-			if (Sight.instance.stare && Sight.instance.focusObject.tag == "Floor")
-	        {
-	            movementMode = false;
-				Player.instance.transform.position = Sight.instance.focus.point + Player.height;
-	            syncWithPlayer();
-            }
-	    }
+		
 	}
 
     /// <summary>

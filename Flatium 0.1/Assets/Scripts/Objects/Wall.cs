@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /**
  * Wall simple object, it has two materials (each for each side)
@@ -51,19 +52,19 @@ public class Wall : FlatiumObject {
 		
 	}
 
-    public override void onfocus () {
+	public override void OnPointerEnter (PointerEventData eventData) {
+		focused = true;
 		// TODO wireframe draw focus
 
 		// HACK remove when wireframe drawing shader will be ready
-		gameObject.GetComponent<Renderer>().material = (_focused) ? Flatium.FOCUSED_MATERIAL : material;
-    }
+		gameObject.GetComponent<Renderer>().material = Flatium.FOCUSED_MATERIAL;
+	}
 
-    public override void onselect () {
-		// TODO wireframe draw select
-    }
+	public override void OnPointerExit (PointerEventData eventData) {
+		focused = false;
+		// TODO wireframe draw focus
 
-	public override void onclick () {
-		// TODO maybe call material GUI, or place here Furniture
-		Flatium.onclick(this);
+		// HACK remove when wireframe drawing shader will be ready
+		gameObject.GetComponent<Renderer>().material = material;
 	}
 }

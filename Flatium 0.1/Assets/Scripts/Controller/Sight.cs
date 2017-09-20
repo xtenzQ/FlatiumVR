@@ -15,39 +15,41 @@ public class Sight : MonoBehaviour {
 
 	public static Sight instance;
 
-	// this must be const... and static... static const
-	// well... while this class is static it can be just "private static"
-	private float ONSIGHT_TIME = 1.0f; // 1000 ms, fucking Unity used float
-	private float MOVED_RADIUS = 0.07f; // TODO realy sensetive, and head is always shake a little bit... later, maybe use integral value
-
 	public Image sightCircle;
 	public Image loadCircle;
 
-	// this var true if mouse wasn't move at least ONSIGHT_TIME time
-	public bool stare { get; private set; }
+	// this must be const... and static... static const
+	// well... while this class is static it can be just "private static"
+	public float stareTime = 1.0f; // 1000 ms, fucking Unity used float
+	public float movedRadius = 0.07f; // TODO realy sensetive, and head is always shake a little bit... later, maybe use integral value
+	public float rotationSensety = 5.0f;
 
 	// this var true if mouse movement more than MOVED_RADIUS
 	public bool moved { get; private set; }
 
 	// this var store mouse/sight movement. Just for better performance, even if you every time can use "Input.GetAxis("Mouse X/Y")"
-	public Vector2 movement { get; private set; }
+	public Vector3 movement { get; private set; }
 
-	private float sightState = 0.0f;
+	public RaycastResult focus;
+
 	// this var contain Object, that lies under the mouse (usualy it's underlined in some way)
-	private FlatiumObject _focusObject;
-	public FlatiumObject focusObject {
-		set {
-			if (_focusObject != value) {
+	private GameObject _focusObject;
+	public GameObject focusObject {
+		set {			
+			if (_focusObject != value) {				
+				var pointer = new PointerEventData(EventSystem.current);
+				pointer.position = new Vector2(Screen.width / 2.0f, Screen.height / 2.0f);
 				if (_focusObject != null) {
-					_focusObject.focused = false;
-				}
+					ExecuteEvents.Execute(_focusObject, pointer, ExecuteEvents.pointerExitHandler);	
+				}					
 				_focusObject = value;
 				if (_focusObject != null) {
-					_focusObject.focused = true;
+					ExecuteEvents.Execute(_focusObject, pointer, ExecuteEvents.pointerEnterHandler);	
 				}
-			}
-			if (sightState == 0.0f || sightState == 1.0f) {
-				StartCoroutine("changeState");
+				if (!_sightCircleCourutine) {
+					StartCoroutine("sightCircleAnimate");
+				}
+				clickOnStare ();
 			}
 		}
 		get {
@@ -55,39 +57,64 @@ public class Sight : MonoBehaviour {
 		}
 	}
 
-	// in this var you can find most information about where cursor lies, such as: position (point), distance to focusObject (distance), normal and other
-	// this var represent sight functionality. It's some kind of mouse
-	public RaycastHit focus;
+	public void clickOnStare () {
+		loadCircleState = 0.0f;
+		if (!_loadCircleCourutine) {
+			StartCoroutine("loadCircleCourutine");
+		}
+	}
 
-	// just a variable that store stare time, used in "updateSight"
-	private float stareTime = 0.0f;
+	private float loadCircleState = 0.0f;
+	private bool _loadCircleCourutine = false;
+	private IEnumerator loadCircleCourutine () {
+		_loadCircleCourutine = true;
+		while (_loadCircleCourutine && loadCircleState < 1.0f) {
+			loadCircleState += (_focusObject != null) ? Time.deltaTime / (stareTime * (10.0f * (movement.z > 0.5f ? movement.z : 0.0f) + 1.0f)) : -0.15f;
+			if (loadCircleState < 1.0f) {
+				loadCircle.fillAmount = loadCircleState;
+				yield return new WaitForSeconds (0.01f);
+			}
+		}
+		if (loadCircleState >= 1.0f) {
+			// TODO onclick
+			loadCircleState = 0.0f;
+			loadCircle.fillAmount = 0.0f;
 
-	private IEnumerator changeState () {
+			/*var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+			//pointer.position = Input.mousePosition;
+			pointer.position = new Vector2(Screen.width / 2, Screen.height / 2);
+			List<RaycastResult> results = new List<RaycastResult>();
+			EventSystem.current.RaycastAll(pointer, results);
+			if (results.Count > 0) {
+				ExecuteEvents.Execute(results[0].gameObject, pointer, ExecuteEvents.pointerClickHandler);
+			}*/
+		}
+		_loadCircleCourutine = false;
+	}
+
+	private float sightCircleState = 0.0f;
+	private bool _sightCircleCourutine = false;
+	private IEnumerator sightCircleAnimate () {		
+		_sightCircleCourutine = true;
 		Button bt = sightCircle.GetComponent<Button> ();
 		do {
-			sightState += (_focusObject != null) ? 0.1f : -0.1f;
-			sightCircle.transform.localScale = new Vector3 (1.0f + sightState * 4.0f, 1.0f + sightState * 4.0f, 1.0f);
-			bt.interactable = sightState > 0.2f;
-			loadCircle.fillAmount = sightState;
-			yield return new WaitForSeconds (0.01f);
-		} while (sightState > 0.0f && sightState < 1.0f);
-
-		//var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
-		if (sightState > 1.0f) {
-			sightState = 1.0f;
-			//ExecuteEvents.Execute(bt.gameObject, pointer, ExecuteEvents.submitHandler);
-		}
-		if (sightState < 0.0f) {
-			sightState = 0.0f;
-			//ExecuteEvents.Execute(bt.gameObject, pointer, ExecuteEvents.submitHandler);
-		}
+			sightCircleState += (_focusObject != null) ? 0.1f : -0.1f;
+			bt.interactable = sightCircleState > 0.2f;
+			if (sightCircleState > 1.0f) {
+				sightCircleState = 1.0f;
+				sightCircle.transform.localScale = new Vector3 (5.0f, 5.0f, 1.0f);
+			} else if (sightCircleState < 0.0f) {
+				sightCircleState = 0.0f;
+				sightCircle.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+			} else {
+				sightCircle.transform.localScale = new Vector3 (1.0f + sightCircleState * 4.0f, 1.0f + sightCircleState * 4.0f, 1.0f);
+				yield return new WaitForSeconds (0.01f);
+			}
+		} while (_sightCircleCourutine && sightCircleState > 0.0f && sightCircleState < 1.0f);
+		_sightCircleCourutine = false;
 	}
-
-	public void clickeee () {
-		Debug.Log ("Click!");
-	}
-
-	void Start () {
+		
+	void Awake () {
 		Sight.instance = this;
 	}
 
@@ -100,77 +127,57 @@ public class Sight : MonoBehaviour {
 	 * This function update such variables as "movement", "moved" and "stare"
 	 */
 	public void updateSight () {
-		movement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+		Vector2 mouse = new Vector2 (Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+		// Velocity for mouse
+		/*movement = new Vector3(mouse.x, mouse.y, Mathf.Sqrt (mouse.x * mouse.x + mouse.y * mouse.y));
+		moved = movement.z > movedRadius;*/
 
-		bool prevState = moved;
-		// WARN no sqrt operation - less precision, more performance
-		moved = Mathf.Abs(movement.x) > MOVED_RADIUS || Mathf.Abs(movement.y) > MOVED_RADIUS;
-		if (!moved) {
-			if (!stare && Time.time - stareTime > ONSIGHT_TIME) {
-				stare = true;
-				Flatium.onstare ();
+		// Velocity for centre of the screeen
+		if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftAlt)) {
+			movement = new Vector3(mouse.x, mouse.y, Mathf.Sqrt (mouse.x * mouse.x + mouse.y * mouse.y));
+			moved = movement.z > movedRadius;
+			Vector3 mouseMovement = new Vector3(-mouse.y, mouse.x, 0) * rotationSensety + this.transform.eulerAngles;
+			// Говнокод! Исправить!
+			if (mouseMovement.x > 180) {
+				if (mouseMovement.x < 270) {
+					mouseMovement.x = 270;
+				}
+			} else {
+				if (mouseMovement.x > 90) {
+					mouseMovement.x = 90;
+				}
 			}
-			if (prevState) { // if was moved AND now isn't
-				Flatium.onstop();
-				stareTime = Time.time; // reset counter
-			}
-		} else { // if moving
-			stare = false;
-			Flatium.onmove ();
-
-			stareTime = Time.time; // reset counter
+			this.transform.eulerAngles = mouseMovement;
 		}
 	}
 
 	/**
 	 * This function update such variables as "focusObject" and "focus", should be used after "updateSight"
 	 */
-	public void updateFocus () {
+	public void updateFocus () {		
 		if (moved) {
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, 0.0f));
+			//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit = new RaycastHit ();
+			focusObject = (
+				Physics.Raycast (ray, out hit, Mathf.Infinity, 
+					(1 << LayerMask.NameToLayer("Floor")) |
+					(1 << LayerMask.NameToLayer("Walls and Furniture")) )
+			) ? hit.collider.gameObject : null;
 
-			/*Physics.Raycast(ray, out focus, Mathf.Infinity, LayerMask.GetMask("UI"));
-			if (focus.collider != null) {
-				Debug.Log ("To UI!");
-				return;
-			}*/
-			PointerEventData pointerData = new PointerEventData(EventSystem.current);
-
-			pointerData.position = Input.mousePosition;
-
+			/*PointerEventData pointerData = new PointerEventData(EventSystem.current);
+			//pointerData.position = Input.mousePosition;
+			pointerData.position = new Vector2(Screen.width / 2, Screen.height / 2);
 			List<RaycastResult> results = new List<RaycastResult>();
 			EventSystem.current.RaycastAll(pointerData, results);
 			if (results.Count > 0) {
-				
-			}
-
-
-			// TODO maybe shuold create some variable like TYPE or ID, or use built-in vars like TAG... or something else (!!!)
-			// 		should raycast be separate for walls and floors? Is this faster way? At least this thing determine what exactly was collided Wall or Floor
-			Physics.Raycast(ray, out focus, Mathf.Infinity, LayerMask.GetMask("Walls and Furniture"));
-			if (focus.collider != null) {
-				// walls and furniture proccesing
-				// TODO potential error place. Why? I get FlatiumObject component... I'm shoked just because it's work and I have a big doubts about it
-				// 		imagine if there was two FlatiumObject binded to gameObject. Test it later
-				FlatiumObject fo = focus.collider.gameObject.GetComponent<FlatiumObject>();
-				focusObject = fo;
+				Debug.Log (results[0]);
+				focusObject = results [0].gameObject;
+				focus = results [0];
 			} else {
-				Physics.Raycast(ray, out focus, Mathf.Infinity, LayerMask.GetMask("Floor"));
-				if (focus.collider != null) {
-					// floors proccesing
-					FlatiumObject fo = focus.collider.gameObject.GetComponent<FlatiumObject>();
-					focusObject = fo;
-				} else {
-					focusObject = null;
-				}
-			}            
+				focusObject = null;
+			}*/
 		}
 	}
-
-    public void resetSight()
-    {
-        stare = false;
-        stareTime = Time.time;
-    }
 
 }

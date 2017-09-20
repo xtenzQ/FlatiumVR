@@ -12,10 +12,9 @@ public class Player : MonoBehaviour {
 
 	public static Vector3 height = new Vector3(0, 1.5f, 0);
     private float speed = 3.0f;
-	private float rotation_sensety = 5.0f;
 
 	void Awake () {
-		instance = gameObject; // some kind of singleton?	
+		instance = gameObject; // some kind of singleton?
 	}
 
 	void Start () {
@@ -24,7 +23,6 @@ public class Player : MonoBehaviour {
 	
 	void Update () {
         updateMove ();
-		updateRotation ();
     }
 
     private void updateMove () {
@@ -39,27 +37,5 @@ public class Player : MonoBehaviour {
             instance.transform.Translate(movement.normalized * speed * Time.deltaTime);
         }
     }
-
-	private void updateRotation () {		
-		if (Input.GetMouseButton(0)) {
-		    Vector3 mouseMovement = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * rotation_sensety + this.transform.eulerAngles;
-            // Говнокод! Исправить!
-            if (mouseMovement.x > 180)
-		    {
-		        if (mouseMovement.x < 270)
-		        {
-		            mouseMovement.x = 270;
-		        }
-		    }
-		    else
-		    {
-		        if (mouseMovement.x > 90)
-		        {
-		            mouseMovement.x = 90;
-		        }
-		    }
-		    this.transform.eulerAngles = mouseMovement;
-		}
-	}
 
 }

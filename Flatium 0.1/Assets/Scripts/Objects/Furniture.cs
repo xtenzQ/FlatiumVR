@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /**
  * Furniture is a simple mesh somewhere in the flat. It can be anything, begining from fridge and ending with slippers
@@ -23,21 +24,21 @@ public class Furniture : FlatiumObject {
 
     void Update () {
 
-    }
-		
-	public override void onfocus () {
+    }		
+
+	public override void OnPointerEnter (PointerEventData eventData) {
+		focused = true;
 		// TODO wireframe draw focus
 
 		// HACK remove when wireframe drawing shader will be ready
-		gameObject.GetComponent<Renderer>().material = (_focused) ? Flatium.FOCUSED_MATERIAL : material;
+		gameObject.GetComponent<Renderer>().material = Flatium.FOCUSED_MATERIAL;
 	}
 
-	public override void onselect () {
-		// TODO wireframe draw select
-	}
-		
-	public override void onclick () {
-		// TODO maybe call GUI of material changind, or moving GUI, or just select this
-		Flatium.onclick(this);
+	public override void OnPointerExit (PointerEventData eventData) {
+		focused = false;
+		// TODO wireframe draw focus
+
+		// HACK remove when wireframe drawing shader will be ready
+		gameObject.GetComponent<Renderer>().material = material;
 	}
 }

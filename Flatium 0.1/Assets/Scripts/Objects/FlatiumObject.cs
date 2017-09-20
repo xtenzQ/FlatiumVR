@@ -14,10 +14,23 @@ using UnityEngine.EventSystems;
  *      ContainerObject and put it like a fild (preferable), or create abstract ContainerObject that will 
  *      inherit FlatiumObject and will be expanded with them? // in progres Ivan
  */
-[RequireComponent(typeof(EventTrigger))]
-public abstract class FlatiumObject : MonoBehaviour {
+//[RequireComponent(typeof(EventTrigger))]
+public abstract class FlatiumObject : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler {	
+	
+	public virtual void OnPointerEnter (PointerEventData eventData)
+	{
+		Debug.Log ("SELECT!");
+	}
 
-	protected EventTrigger trigger;
+	public virtual void OnPointerClick (PointerEventData eventData)
+	{
+		Debug.Log ("CLICK!");
+	}
+
+	public virtual void OnPointerExit (PointerEventData eventData)
+	{
+		Debug.Log ("EXIT!");
+	}
 
 	// HACK remove when wireframe drawing shader will be ready
 	protected Material material;
@@ -27,13 +40,13 @@ public abstract class FlatiumObject : MonoBehaviour {
     protected bool _focused = false;
 
     // get-set for _focus/_selected vars
+	// TODO meaningless
     public bool selected {
         get {
             return _selected;
         }
         set {
             this._selected = value;
-            onselect();
         }
     }
 
@@ -43,11 +56,10 @@ public abstract class FlatiumObject : MonoBehaviour {
         }
         set {
             this._focused = value;
-            onfocus();
         }
     }
 
-	void Awake () {
+	/*void Awake () {
 		trigger = gameObject.GetComponent<EventTrigger> ();
 
 		EventTrigger.Entry entry = new EventTrigger.Entry ();
@@ -59,11 +71,6 @@ public abstract class FlatiumObject : MonoBehaviour {
 
 	public void Yeaaaa () {
 		Debug.Log ("Triggggeeeeer!");
-	}
-
-	// simple event system
-    public abstract void onselect();
-    public abstract void onfocus();
-	public abstract void onclick();
+	}*/
 
 }
