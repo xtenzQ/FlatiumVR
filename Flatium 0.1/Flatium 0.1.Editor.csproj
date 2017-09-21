@@ -121,6 +121,45 @@
     <Reference Include="Google.ProtocolBuffers">
       <HintPath>Assets\GoogleVR\Plugins\Google.ProtocolBuffers.dll</HintPath>
     </Reference>
+    <Reference Include="AsyncBridge.Net35">
+      <HintPath>Assets\Plugins\GitHub\Editor\AsyncBridge.Net35.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Api">
+      <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Logging">
+      <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Unity">
+      <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets\Plugins\GitHub\Editor\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>Assets\Plugins\GitHub\Editor\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>Assets\Plugins\GitHub\Editor\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Octokit">
+      <HintPath>Assets\Plugins\GitHub\Editor\Octokit.dll</HintPath>
+    </Reference>
+    <Reference Include="Rackspace.Threading">
+      <HintPath>Assets\Plugins\GitHub\Editor\Rackspace.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="ReadOnlyCollectionsInterfaces">
+      <HintPath>Assets\Plugins\GitHub\Editor\ReadOnlyCollectionsInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="sfw.net">
+      <HintPath>Assets\Plugins\GitHub\Editor\sfw.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>Assets\Plugins\GitHub\Editor\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>Assets\Plugins\GitHub\Editor\System.Threading.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Flatium 0.1.csproj">
@@ -161,6 +200,8 @@
     <None Include="Assets\GoogleVR\Shaders\GvrUnlitTransparentOverlay.shader" />
     <None Include="Assets\GoogleVR\Shaders\GvrUnlitTransparentOverlayColor.shader" />
     <None Include="Assets\GoogleVR\Shaders\Video\VideoUnlitShader.shader" />
+    <None Include="Assets\Plugins\GitHub\Editor\CREDITS.txt" />
+    <None Include="Assets\Plugins\GitHub\Editor\EULA.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
