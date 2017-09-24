@@ -20,7 +20,6 @@ public class Sight : MonoBehaviour {
 
 	// this must be const... and static... static const
 	// well... while this class is static it can be just "private static"
-	public float stareTime = 1.0f; // 1000 ms, fucking Unity used float
 	public float movedRadius = 0.07f; // TODO realy sensetive, and head is always shake a little bit... later, maybe use integral value
 	public float rotationSensety = 5.0f;
 
@@ -30,7 +29,8 @@ public class Sight : MonoBehaviour {
 	// this var store mouse/sight movement. Just for better performance, even if you every time can use "Input.GetAxis("Mouse X/Y")"
 	public Vector3 movement { get; private set; }
 
-	public RaycastResult focus;
+	public RaycastResult rayResult;
+	public RaycastHit rayHit;
 
 	// this var contain Object, that lies under the mouse (usualy it's underlined in some way)
 	private GameObject _focusObject;
@@ -40,61 +40,109 @@ public class Sight : MonoBehaviour {
 				var pointer = new PointerEventData(EventSystem.current);
 				pointer.position = new Vector2(Screen.width / 2.0f, Screen.height / 2.0f);
 				if (_focusObject != null) {
-					ExecuteEvents.Execute(_focusObject, pointer, ExecuteEvents.pointerExitHandler);	
+					ExecuteEvents.Execute(_focusObject, pointer, ExecuteEvents.pointerExitHandler);
 				}					
 				_focusObject = value;
 				if (_focusObject != null) {
-					ExecuteEvents.Execute(_focusObject, pointer, ExecuteEvents.pointerEnterHandler);	
+					ExecuteEvents.Execute(_focusObject, pointer, ExecuteEvents.pointerEnterHandler);
 				}
 				if (!_sightCircleCourutine) {
 					StartCoroutine("sightCircleAnimate");
 				}
-				clickOnStare ();
 			}
 		}
 		get {
 			return _focusObject;
 		}
 	}
+		
+	public delegate void Callback ();
 
-	public void clickOnStare () {
-		loadCircleState = 0.0f;
+	public static Callback click = () => {
+		var pointer = new PointerEventData(EventSystem.current);
+		pointer.position = new Vector2(Screen.width / 2.0f, Screen.height / 2.0f);
+		ExecuteEvents.Execute(Sight.instance._focusObject, pointer, ExecuteEvents.pointerClickHandler);
+	};
+
+	private Callback callback;
+	public float stareTime = 0.5f;
+	public float loadCircleDelay = -0.2f;
+	public float loadCircleDecrease = -0.035f;
+	public float loadCircleMovementSensety = 0.2f;
+
+	private float loadCircleState = -1.0f;
+	private bool _loadCircleCourutine = false;
+	private bool _loadCircleDirection = false;
+
+	// Эта функция включает счетчик загрузки. Как только загрузка будет выполнена, будет вызвана функция func
+	public void OnStare (Callback func = null) {
+		callback = func;
+		_loadCircleDirection = true;
 		if (!_loadCircleCourutine) {
 			StartCoroutine("loadCircleCourutine");
 		}
 	}
 
-	private float loadCircleState = 0.0f;
-	private bool _loadCircleCourutine = false;
+	// Эту функция позволяет вызвать OnStare из EventTrigger-а в Unity редакторе, что есть удобнее
+	public void OnStareClick() {
+		OnStareReset ();
+		OnStare (click);
+	}
+
+	// Эта функция сбрасывает счетчик круга загрузки
+	public void OnStareReset() {		
+		loadCircle.fillAmount = 0.0f;
+		loadCircleState = loadCircleDelay;
+	}
+
+	// Эта функция меняет направление счетчика загрузки, и он рано или поздно сбрасывается в 0
+	public void OnStareStop() {
+		_loadCircleDirection = false;
+	}
+
+	/*public bool OnStarePush () {
+		float decrease = (movement.z > 0.5f) ? loadCircleMovementSensety * movement.z * movement.z : 0.0f;
+		float increase = Time.deltaTime / stareTime - decrease;
+		loadCircleState += (increase < loadCircleDecrease) ? loadCircleDecrease : increase;
+		if (loadCircleState < loadCircleDelay) {
+			loadCircleState = loadCircleDelay;
+		}
+		if (loadCircleState >= loadCircleDelay && loadCircleState < 1.0f) {
+			loadCircle.fillAmount = loadCircleState;
+		}
+		return IsStare ();
+	}
+
+	public bool IsStare () {
+		return loadCircleState == 1.0f;
+	}*/
+
 	private IEnumerator loadCircleCourutine () {
 		_loadCircleCourutine = true;
-		while (_loadCircleCourutine && loadCircleState < 1.0f) {
-			loadCircleState += (_focusObject != null) ? Time.deltaTime / (stareTime * (10.0f * (movement.z > 0.5f ? movement.z : 0.0f) + 1.0f)) : -0.15f;
-			if (loadCircleState < 1.0f) {
+		float decrease = 0.0f;
+		float increase = 0.0f;
+		do {
+			decrease = (movement.z > 0.5f) ? loadCircleMovementSensety * movement.z * movement.z : 0.0f;
+			increase = Time.deltaTime / stareTime - decrease;
+			loadCircleState += (_loadCircleDirection) ? (increase < loadCircleDecrease) ? loadCircleDecrease : increase : loadCircleDecrease;
+			if (loadCircleState < loadCircleDelay) {
+				loadCircleState = loadCircleDelay;
+			}
+			if (loadCircleState >= loadCircleDelay && loadCircleState < 1.0f) {
 				loadCircle.fillAmount = loadCircleState;
 				yield return new WaitForSeconds (0.01f);
 			}
+		} while ((_loadCircleDirection && loadCircleState < 1.0f) || (!_loadCircleDirection && loadCircleState > 0.0f));
+		if (loadCircleState >= 1.0f && callback != null) {
+			callback ();
 		}
-		if (loadCircleState >= 1.0f) {
-			// TODO onclick
-			loadCircleState = 0.0f;
-			loadCircle.fillAmount = 0.0f;
-
-			/*var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
-			//pointer.position = Input.mousePosition;
-			pointer.position = new Vector2(Screen.width / 2, Screen.height / 2);
-			List<RaycastResult> results = new List<RaycastResult>();
-			EventSystem.current.RaycastAll(pointer, results);
-			if (results.Count > 0) {
-				ExecuteEvents.Execute(results[0].gameObject, pointer, ExecuteEvents.pointerClickHandler);
-			}*/
-		}
+		loadCircle.fillAmount = loadCircleState = 0.0f;
 		_loadCircleCourutine = false;
 	}
 
 	private float sightCircleState = 0.0f;
 	private bool _sightCircleCourutine = false;
-	private IEnumerator sightCircleAnimate () {		
+	private IEnumerator sightCircleAnimate () {
 		_sightCircleCourutine = true;
 		Button bt = sightCircle.GetComponent<Button> ();
 		do {
@@ -152,31 +200,32 @@ public class Sight : MonoBehaviour {
 	}
 
 	/**
-	 * This function update such variables as "focusObject" and "focus", should be used after "updateSight"
+	 * Именно этот метод позволяет определить на что смотрит центр экорана
+	 * Если его не вызывать ничего не выйдет. Увы совсем на родные raycaster-ы Unity перейти не получилось из-за проблемы с мышью
+	 * TODO если выяснится что в VR мыши нет (по сути это так), то можно будет немножко подчистить код
+	 * Результаты можно увидеть в переменных focusObject, rayHit и rayResult
 	 */
 	public void updateFocus () {		
-		if (moved) {
-			Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, 0.0f));
-			//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit = new RaycastHit ();
-			focusObject = (
-				Physics.Raycast (ray, out hit, Mathf.Infinity, 
-					(1 << LayerMask.NameToLayer("Floor")) |
-					(1 << LayerMask.NameToLayer("Walls and Furniture")) )
-			) ? hit.collider.gameObject : null;
-
-			/*PointerEventData pointerData = new PointerEventData(EventSystem.current);
-			//pointerData.position = Input.mousePosition;
-			pointerData.position = new Vector2(Screen.width / 2, Screen.height / 2);
+		// До тех пор пока в flatium нет движущихся объектов это условие будет маленькой оптимизацией
+		if (moved) { 
+			var pointer = new PointerEventData(EventSystem.current);
+			//pointer.position = Input.mousePosition;
+			pointer.position = new Vector2(Screen.width / 2, Screen.height / 2);
 			List<RaycastResult> results = new List<RaycastResult>();
-			EventSystem.current.RaycastAll(pointerData, results);
-			if (results.Count > 0) {
-				Debug.Log (results[0]);
+			EventSystem.current.RaycastAll(pointer, results);
+			if (results.Count > 0) {				
 				focusObject = results [0].gameObject;
-				focus = results [0];
+				rayResult = results [0];
 			} else {
-				focusObject = null;
-			}*/
+				Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, 0.0f));
+				//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				rayHit = new RaycastHit ();
+				focusObject = (
+				    Physics.Raycast (ray, out rayHit, Mathf.Infinity, 
+					    (1 << LayerMask.NameToLayer ("Floor")) |
+					    (1 << LayerMask.NameToLayer ("Walls and Furniture")))
+				) ? rayHit.collider.gameObject : null;
+			}
 		}
 	}
 

@@ -8,13 +8,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    public static GameObject instance;
+    public static Player instance;
 
-	public static Vector3 height = new Vector3(0, 1.5f, 0);
+	private static Vector3 height = new Vector3(0, 1.5f, 0);
     private float speed = 3.0f;
 
 	void Awake () {
-		instance = gameObject; // some kind of singleton?
+		instance = this;
 	}
 
 	void Start () {
@@ -24,6 +24,10 @@ public class Player : MonoBehaviour {
 	void Update () {
         updateMove ();
     }
+
+	public void moveTo (Vector3 point) {
+		gameObject.transform.position = point + height;
+	}
 
     private void updateMove () {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
