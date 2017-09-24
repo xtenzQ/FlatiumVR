@@ -66,7 +66,6 @@
      <Compile Include="Assets\GoogleVR\Editor\GvrEditorSettings.cs" />
      <Compile Include="Assets\GoogleVR\Editor\GvrMenu.cs" />
      <None Include="Assets\GoogleVR\Shaders\GvrUIOverlayFont.shader" />
-     <None Include="Assets\Plugins\GitHub\Editor\CREDITS.txt" />
      <None Include="Assets\GoogleVR\Shaders\GvrAdditiveOverlay.shader" />
      <None Include="Assets\GoogleVR\Demos\Environment\DemoEnvUnlitGrayscale.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrController.shader" />
@@ -81,7 +80,6 @@
      <None Include="Assets\GoogleVR\Shaders\GvrReticleShader.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUIOverlay.shader" />
      <None Include="Assets\GoogleVR\Plugins\Android\AndroidManifest-Cardboard.xml" />
-     <None Include="Assets\Plugins\GitHub\Editor\EULA.txt" />
      <None Include="Assets\GoogleVR\Plugins\Android\proguard-gvr.txt" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
@@ -145,45 +143,6 @@
  </Reference>
  <Reference Include="Google.ProtocolBuffers">
  <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/GoogleVR/Plugins/Google.ProtocolBuffers.dll</HintPath>
- </Reference>
- <Reference Include="Octokit">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/Octokit.dll</HintPath>
- </Reference>
- <Reference Include="GitHub.Logging">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/GitHub.Logging.dll</HintPath>
- </Reference>
- <Reference Include="Rackspace.Threading">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/Rackspace.Threading.dll</HintPath>
- </Reference>
- <Reference Include="Mono.Security">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/Mono.Security.dll</HintPath>
- </Reference>
- <Reference Include="ReadOnlyCollectionsInterfaces">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/ReadOnlyCollectionsInterfaces.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/System.Threading.dll</HintPath>
- </Reference>
- <Reference Include="GitHub.Unity">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/GitHub.Unity.dll</HintPath>
- </Reference>
- <Reference Include="GitHub.Api">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/GitHub.Api.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.Http">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/System.Net.Http.dll</HintPath>
- </Reference>
- <Reference Include="AsyncBridge.Net35">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/AsyncBridge.Net35.dll</HintPath>
- </Reference>
- <Reference Include="Mono.Posix">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/Mono.Posix.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/ICSharpCode.SharpZipLib.dll</HintPath>
- </Reference>
- <Reference Include="sfw.net">
- <HintPath>C:/Users/gofab/Desktop/Programming/GitRepository/FlatiumVR/Flatium 0.1/Assets/Plugins/GitHub/Editor/sfw.net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

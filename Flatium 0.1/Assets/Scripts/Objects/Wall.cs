@@ -58,6 +58,8 @@ public class Wall : FlatiumObject {
 
 		// HACK remove when wireframe drawing shader will be ready
 		gameObject.GetComponent<Renderer>().material = Flatium.FOCUSED_MATERIAL;
+
+		Flatium.instance.onEnterWall ();
 	}
 
 	public override void OnPointerExit (PointerEventData eventData) {
@@ -66,5 +68,11 @@ public class Wall : FlatiumObject {
 
 		// HACK remove when wireframe drawing shader will be ready
 		gameObject.GetComponent<Renderer>().material = material;
+
+		Flatium.instance.onExitWall ();
+	}
+
+	public override void OnPointerClick (PointerEventData eventData) {
+		Flatium.instance.onClickWall ();
 	}
 }
